@@ -1,0 +1,4 @@
+service name,profile, address, port, network
+google,production,localhost,8080,tcp
+google,test,localhost,8080,tcp
+google,test,localhost,8080,udp
