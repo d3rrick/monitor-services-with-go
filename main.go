@@ -6,7 +6,9 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"net"
 	"os"
+	"sync"
 	"time"
 )
 
@@ -73,48 +75,48 @@ func backgroundTask(csvFile *string) {
 	}
 }
 
-// func makeRequest(services []Service) (reports []Report, err error) {
-// 	ch := make(chan Report)
-// 	var wg sync.WaitGroup
-// 	timeOut := time.Duration(timeout) * time.Second
-// 	for _, s := range services {
-// 		wg.Add(1)
-// 		// worker
-// 		go func(s Service) {
-// 			defer wg.Done()
-// 			var r Report
-// 			start := time.Now()
-// 			conn, err := net.DialTimeout(s.Network, s.Address+":"+s.Port, timeOut)
-// 			elapsed := time.Since(start)
-// 			r.Elapsed = fmt.Sprintf("%dms", elapsed.Nanoseconds()/1000000)
-// 			r.ConnTime = (time.Now().String())
-// 			if err != nil {
-// 				r.Errors = error.Error(err)
-// 				r.Service = s
-// 				r.Status = "failure"
-// 				ch <- r
-// 				return
-// 			}
-// 			r.Errors = "none"
-// 			r.Service = s
-// 			r.Connection.LocalIP = fmt.Sprintf(conn.LocalAddr().String())
-// 			r.Connection.RemoteIP = fmt.Sprintf(conn.RemoteAddr().String())
-// 			r.Status = "success"
-// 			conn.Close()
-// 			ch <- r
-// 		}(s)
-// 	}
-// 	go func() {
-// 		wg.Wait()
-// 		close(ch)
-// 	}()
+func makeRequest(services []Service) (reports []Report, err error) {
+	ch := make(chan Report)
+	var wg sync.WaitGroup
+	timeOut := time.Duration(timeout) * time.Second
+	for _, s := range services {
+		wg.Add(1)
+		// worker
+		go func(s Service) {
+			defer wg.Done()
+			var r Report
+			start := time.Now()
+			conn, err := net.DialTimeout(s.Network, s.Address+":"+s.Port, timeOut)
+			elapsed := time.Since(start)
+			r.Elapsed = fmt.Sprintf("%dms", elapsed.Nanoseconds()/1000000)
+			r.ConnTime = (time.Now().String())
+			if err != nil {
+				r.Errors = error.Error(err)
+				r.Service = s
+				r.Status = "failure"
+				ch <- r
+				return
+			}
+			r.Errors = "none"
+			r.Service = s
+			r.Connection.LocalIP = fmt.Sprintf(conn.LocalAddr().String())
+			r.Connection.RemoteIP = fmt.Sprintf(conn.RemoteAddr().String())
+			r.Status = "success"
+			conn.Close()
+			ch <- r
+		}(s)
+	}
+	go func() {
+		wg.Wait()
+		close(ch)
+	}()
 
-// 	for range ch {
-// 		rep := <-ch
-// 		reports = append(reports, rep)
-// 	}
-// 	return reports, nil
-// }
+	for range ch {
+		rep := <-ch
+		reports = append(reports, rep)
+	}
+	return reports, nil
+}
 
 func parseLines(lines [][]string) []Service {
 	ret := make([]Service, len(lines))
