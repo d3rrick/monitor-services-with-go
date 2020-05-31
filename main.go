@@ -22,14 +22,14 @@ type Connection struct {
 }
 
 // Report struct
-// type Report struct {
-// 	Service    Service    `json:"service"`
-// 	Connection Connection `json:"connection"`
-// 	Errors     string     `json:"errors"`
-// 	Elapsed    string     `json:"elapsed"`
-// 	Status     string     `json:"status"`
-// 	ConnTime   string     `json:"connection time"`
-// }
+type Report struct {
+	Service    Service    `json:"service"`
+	Connection Connection `json:"connection"`
+	Errors     string     `json:"errors"`
+	Elapsed    string     `json:"elapsed"`
+	Status     string     `json:"status"`
+	ConnTime   string     `json:"connection time"`
+}
 
 // Service Struct
 type Service struct {
