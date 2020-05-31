@@ -42,11 +42,19 @@ type Service struct {
 
 func main() {
 
-	csvFilename := flag.String("csv", "uat_services.csv", "A file with a list of services and ports")
+	// parsing the file containing the list of services
+	// Nb - the data store can be anything - db,json,yaml etc ...
+
+	csvFilename := flag.String("csv", "services_catalog.csv", "A file with a list of services and ports")
 	flag.Parse()
 
+	//start a go routine here
 	go backgroundTask(csvFilename)
+
+	//another logic can proceed here
 	fmt.Println("The rest of my application can continue")
+
+	// select statement allows the main thread to wait for the go routines - kinda blocking the main function to complete
 	select {}
 
 }
@@ -82,6 +90,7 @@ func makeRequest(services []Service) (reports []Report, err error) {
 	for _, s := range services {
 		wg.Add(1)
 		// worker
+		// these go routines created are to allow each service request to be made independently without waiting - parallel execution
 		go func(s Service) {
 			defer wg.Done()
 			var r Report
