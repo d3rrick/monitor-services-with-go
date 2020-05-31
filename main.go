@@ -118,19 +118,19 @@ func backgroundTask(csvFile *string) {
 // 	return reports, nil
 // }
 
-// func parseLines(lines [][]string) []Service {
-// 	ret := make([]Service, len(lines))
-// 	for i, line := range lines {
-// 		ret[i] = Service{
-// 			Name:    line[0],
-// 			Profile: line[1],
-// 			Address: line[2],
-// 			Port:    line[3],
-// 			Network: line[4],
-// 		}
-// 	}
-// 	return ret
-// }
+func parseLines(lines [][]string) []Service {
+	ret := make([]Service, len(lines))
+	for i, line := range lines {
+		ret[i] = Service{
+			Name:    line[0],
+			Profile: line[1],
+			Address: line[2],
+			Port:    line[3],
+			Network: line[4],
+		}
+	}
+	return ret
+}
 
 // func getServices(file *os.File) []Service {
 // 	csvReader := csv.NewReader(file)
