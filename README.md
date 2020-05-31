@@ -26,4 +26,4 @@ This simple app allows you to monitor your service by making a dial in **ip:port
 - [go net/http lib](https://golang.org/pkg/net/http/) 
 
 #### Licence
-[MIT]([https://mit-license.org/](https://mit-license.org/) (c) 2020 [muriithi derrick]([https://github.com/derrick-gopher](https://github.com/derrick-gopher))
+[MIT](https://mit-license.org/) (c) 2020 [muriithi derrick]([https://github.com/derrick-gopher](https://github.com/derrick-gopher))
