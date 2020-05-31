@@ -6,9 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"net"
 	"os"
-	"sync"
 	"time"
 )
 
@@ -132,18 +130,18 @@ func parseLines(lines [][]string) []Service {
 	return ret
 }
 
-// func getServices(file *os.File) []Service {
-// 	csvReader := csv.NewReader(file)
-// 	// eliminates first row
-// 	if _, err := csvReader.Read(); err != nil {
-// 		panic(err)
-// 	}
+func getServices(file *os.File) []Service {
+	csvReader := csv.NewReader(file)
+	// eliminates first row
+	if _, err := csvReader.Read(); err != nil {
+		panic(err)
+	}
 
-// 	// reads the rest of the body
-// 	log.Println("Reading csv file.")
-// 	lines, err := csvReader.ReadAll()
-// 	if err != nil {
-// 		log.Printf(err.Error())
-// 	}
-// 	return parseLines(lines)
+	// reads the rest of the body
+	log.Println("Reading csv file.")
+	lines, err := csvReader.ReadAll()
+	if err != nil {
+		log.Printf(err.Error())
+	}
+	return parseLines(lines)
 }
