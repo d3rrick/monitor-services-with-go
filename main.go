@@ -51,29 +51,29 @@ func main() {
 
 }
 
-// func backgroundTask(csvFile *string) {
-// 	ticker := time.NewTicker(tictoc * time.Second)
+func backgroundTask(csvFile *string) {
+	ticker := time.NewTicker(tictoc * time.Second)
 
-// 	for range ticker.C {
-// 		file, err := os.Open(*csvFile)
-// 		defer file.Close()
-// 		if err != nil {
-// 			log.Printf("Failed to open csv file: %s \n", *csvFile)
-// 		}
-// 		services := getServices(file)
-// 		rawReports, err := makeRequest(services)
-// 		if err != nil {
-// 			log.Println("error converting making requests")
-// 		}
-// 		// fmt.Println(rawReports)
-// 		reports, err := json.Marshal(rawReports)
-// 		if err != nil {
-// 			log.Println(err)
-// 			return
-// 		}
-// 		log.Println(string(reports))
-// 	}
-// }
+	for range ticker.C {
+		file, err := os.Open(*csvFile)
+		defer file.Close()
+		if err != nil {
+			log.Printf("Failed to open csv file: %s \n", *csvFile)
+		}
+		services := getServices(file)
+		rawReports, err := makeRequest(services)
+		if err != nil {
+			log.Println("error converting making requests")
+		}
+		// fmt.Println(rawReports)
+		reports, err := json.Marshal(rawReports)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		log.Println(string(reports))
+	}
+}
 
 // func makeRequest(services []Service) (reports []Report, err error) {
 // 	ch := make(chan Report)
